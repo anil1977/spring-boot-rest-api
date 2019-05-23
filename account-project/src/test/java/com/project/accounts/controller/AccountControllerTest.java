@@ -36,21 +36,29 @@ public class AccountControllerTest {
 
 	@Test
 	public void getAllAccounts() throws Exception {
-		List<Account> mockAccounts = new ArrayList<Account>();
-		Account mockAccount1 = new Account("Alex", "Smith", "111");
-		Account mockAccount2 = new Account("Bob", "Taylor", "222");
+		final List<Account> mockAccounts = new ArrayList<Account>();
+		final Account mockAccount1 = getFirstSampleAccount();
+		final Account mockAccount2 = getSecondSampleAccount();
 		mockAccounts.add(mockAccount1);
 		mockAccounts.add(mockAccount2);
 
 		Mockito.when(accountService.getAllAccounts()).thenReturn(mockAccounts);
 
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account-project/rest/account/json")
+		final RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account-project/rest/account/json")
 				.accept(MediaType.APPLICATION_JSON);
 
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		final MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-		MockHttpServletResponse response = result.getResponse();
+		final MockHttpServletResponse response = result.getResponse();
 
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
+
+	private Account getSecondSampleAccount() {
+		return new Account("Bob", "Taylor", "222");
+	}
+
+	private Account getFirstSampleAccount() {
+		return new Account("Alex", "Smith", "111");
 	}
 }
