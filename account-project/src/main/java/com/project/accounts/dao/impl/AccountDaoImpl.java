@@ -26,4 +26,10 @@ public class AccountDaoImpl implements AccountDao {
 		return accounts.values().stream().collect(Collectors.toList());
 	}
 
+	@Override
+	public Account addNewAccount(Account account) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

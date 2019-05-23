@@ -54,11 +54,55 @@ public class AccountControllerTest {
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 
+	@Test
+	public void createAccount_success() throws Exception {
+		final Account mockAccount = getFirstSampleAccount();
+		mockAccount.setId(1L);
+
+		Mockito.when(accountService.addNewAccount(Mockito.any(Account.class))).thenReturn(mockAccount);
+
+		final RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/account-project/rest/account/json")
+				.accept(MediaType.APPLICATION_JSON).content(getSampleAccounJson())
+				.contentType(MediaType.APPLICATION_JSON);
+
+		final MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		final MockHttpServletResponse response = result.getResponse();
+
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
+
+	@Test
+	public void createAccount_validation_failure() throws Exception {
+		final Account mockAccount = getInvalidSampleAccount();
+		mockAccount.setId(1L);
+
+		Mockito.when(accountService.addNewAccount(mockAccount)).thenReturn(null);
+
+		final RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/account-project/rest/account/json")
+				.accept(MediaType.APPLICATION_JSON).content(getSampleAccounJson())
+				.contentType(MediaType.APPLICATION_JSON);
+
+		final MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		final MockHttpServletResponse response = result.getResponse();
+
+		assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+	}
+
 	private Account getSecondSampleAccount() {
 		return new Account("Bob", "Taylor", "222");
 	}
 
 	private Account getFirstSampleAccount() {
 		return new Account("Alex", "Smith", "111");
+	}
+
+	private Account getInvalidSampleAccount() {
+		return new Account("Carol", "Miller", "");
+	}
+
+	private String getSampleAccounJson() {
+		return "{\"firstName\":\"Alex\",\"secondName\":\"Smith\",\"accountNumber\":\"111\"}";
 	}
 }

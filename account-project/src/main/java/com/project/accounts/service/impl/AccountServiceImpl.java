@@ -23,4 +23,10 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> getAllAccounts() {
 		return accountDao.getAllAccounts();
 	}
+
+	@Override
+	public Account addNewAccount(Account account) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

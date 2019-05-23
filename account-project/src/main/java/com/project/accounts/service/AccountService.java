@@ -6,6 +6,8 @@ import com.project.accounts.domain.Account;
 
 public interface AccountService {
 
-	public List<Account> getAllAccounts();
+	List<Account> getAllAccounts();
+
+	Account addNewAccount(Account account);
 
 }

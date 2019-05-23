@@ -1,6 +1,7 @@
 package com.project.accounts.service.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.project.accounts.dao.AccountDao;
@@ -54,11 +56,38 @@ public class AccountServiceImplTest {
 		verify(accountDao, times(1)).getAllAccounts();
 	}
 
+	@Test
+	public void testAddNewAccount() {
+		Account accountToAdd = getFirstSampleAccount();
+		Account mockAccount = getFirstSampleAccount();
+		mockAccount.setId(1L);
+
+		when(accountDao.addNewAccount(Mockito.any(Account.class))).thenReturn(mockAccount);
+		assertEquals(mockAccount, accountService.addNewAccount(accountToAdd));
+		verify(accountDao, times(1)).addNewAccount(accountToAdd);
+
+	}
+
+	@Test
+	public void testAddNewAccount_validation_failure() {
+		Account accountToAdd = getInvalidSampleAccount();
+		accountToAdd.setId(1L);
+
+		when(accountDao.addNewAccount(Mockito.any(Account.class))).thenReturn(null);
+		assertNull(accountService.addNewAccount(accountToAdd));
+		verify(accountDao, times(1)).addNewAccount(accountToAdd);
+
+	}
+
 	private Account getSecondSampleAccount() {
 		return new Account("Bob", "Taylor", "222");
 	}
 
 	private Account getFirstSampleAccount() {
 		return new Account("Alex", "Smith", "111");
+	}
+
+	private Account getInvalidSampleAccount() {
+		return new Account("Carol", "Miller", "");
 	}
 }
