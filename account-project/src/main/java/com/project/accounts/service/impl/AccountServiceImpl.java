@@ -26,7 +26,6 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account addNewAccount(Account account) {
-		// TODO Auto-generated method stub
-		return null;
+		return accountDao.addNewAccount(account);
 	}
 }

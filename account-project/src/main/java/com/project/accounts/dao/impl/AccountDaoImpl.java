@@ -20,6 +20,7 @@ import com.project.accounts.domain.Account;
 public class AccountDaoImpl implements AccountDao {
 
 	private static Map<Long, Account> accounts = new HashMap<Long, Account>();
+	private static Long seq = 0L;
 
 	@Override
 	public List<Account> getAllAccounts() {
@@ -28,8 +29,24 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public Account addNewAccount(Account account) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!validAccount(account)) {
+			return null;
+		}
+
+		account.setId(getNextSeq());
+		accounts.put(account.getId(), account);
+		return account;
 	}
 
+	// simple null check for now
+	private boolean validAccount(Account account) {
+
+		return account.getFirstName() != null && !account.getFirstName().isEmpty() && account.getSecondName() != null
+				&& !account.getSecondName().isEmpty() && account.getAccountNumber() != null
+				&& !account.getAccountNumber().isEmpty();
+	}
+
+	private Long getNextSeq() {
+		return ++seq;
+	}
 }

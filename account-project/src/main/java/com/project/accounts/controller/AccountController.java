@@ -5,14 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.accounts.domain.Account;
+import com.project.accounts.domain.ResponseMessage;
 import com.project.accounts.service.AccountService;
 
 @RestController
 public class AccountController {
+
+	private static final String ACCOUNT_CREATION_SUCCESSFUL = "account has been successfully added";
+	private static final String ACCOUNT_CREATION_FAILURE = "account information provided is incomplete to create a new account";
 
 	private AccountService accountService;
 
@@ -27,4 +33,14 @@ public class AccountController {
 		return ResponseEntity.ok(accountService.getAllAccounts());
 	}
 
+	@PostMapping("/account-project/rest/account/json")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> addNewAccount(@RequestBody Account account) {
+		final Account newAccount = accountService.addNewAccount(account);
+		if (newAccount == null) {
+			return ResponseEntity.badRequest().body(new ResponseMessage(ACCOUNT_CREATION_FAILURE));
+		}
+
+		return ResponseEntity.ok(new ResponseMessage(ACCOUNT_CREATION_SUCCESSFUL));
+	}
 }
