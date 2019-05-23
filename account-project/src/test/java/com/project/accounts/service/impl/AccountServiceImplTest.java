@@ -1,7 +1,9 @@
 package com.project.accounts.service.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -77,6 +79,23 @@ public class AccountServiceImplTest {
 		assertNull(accountService.addNewAccount(accountToAdd));
 		verify(accountDao, times(1)).addNewAccount(accountToAdd);
 
+	}
+
+	@Test
+	public void testDeleteAccount_success() {
+		long accounIdForDeletion = 101L;
+		when(accountDao.deleteAccount(Mockito.anyLong())).thenReturn(true);
+		assertTrue(accountService.deleteAccount(accounIdForDeletion));
+		verify(accountDao, times(1)).deleteAccount(accounIdForDeletion);
+
+	}
+
+	@Test
+	public void testDeleteAccount_failure() {
+		long accounIdForDeletion = 101L;
+		when(accountDao.deleteAccount(Mockito.anyLong())).thenReturn(false);
+		assertFalse(accountService.deleteAccount(accounIdForDeletion));
+		verify(accountDao, times(1)).deleteAccount(accounIdForDeletion);
 	}
 
 	private Account getSecondSampleAccount() {

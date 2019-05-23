@@ -28,4 +28,10 @@ public class AccountServiceImpl implements AccountService {
 	public Account addNewAccount(Account account) {
 		return accountDao.addNewAccount(account);
 	}
+
+	@Override
+	public boolean deleteAccount(long l) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

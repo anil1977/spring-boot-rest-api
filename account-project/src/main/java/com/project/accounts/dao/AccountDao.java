@@ -10,4 +10,6 @@ public interface AccountDao {
 
 	Account addNewAccount(Account account);
 
+	boolean deleteAccount(long id);
+
 }

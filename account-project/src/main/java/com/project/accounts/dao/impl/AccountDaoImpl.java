@@ -38,6 +38,12 @@ public class AccountDaoImpl implements AccountDao {
 		return account;
 	}
 
+	@Override
+	public boolean deleteAccount(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	// simple null check for now
 	private boolean validAccount(Account account) {
 
@@ -49,4 +55,5 @@ public class AccountDaoImpl implements AccountDao {
 	private Long getNextSeq() {
 		return ++seq;
 	}
+
 }

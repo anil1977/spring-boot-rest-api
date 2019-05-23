@@ -90,6 +90,36 @@ public class AccountControllerTest {
 		assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
 	}
 
+	@Test
+	public void deleteAccount_success() throws Exception {
+
+		Mockito.when(accountService.deleteAccount(Mockito.anyLong())).thenReturn(true);
+
+		final RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/account-project/rest/account/json/1")
+				.accept(MediaType.APPLICATION_JSON);
+
+		final MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		final MockHttpServletResponse response = result.getResponse();
+
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
+
+	@Test
+	public void deleteAccount_failure() throws Exception {
+
+		Mockito.when(accountService.deleteAccount(Mockito.anyLong())).thenReturn(false);
+
+		final RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/account-project/rest/account/json/1")
+				.accept(MediaType.APPLICATION_JSON);
+
+		final MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		final MockHttpServletResponse response = result.getResponse();
+
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+	}
+
 	private Account getSecondSampleAccount() {
 		return new Account("Bob", "Taylor", "222");
 	}
