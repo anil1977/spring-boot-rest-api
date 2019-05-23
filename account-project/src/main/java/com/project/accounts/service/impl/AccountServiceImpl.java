@@ -30,8 +30,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public boolean deleteAccount(long l) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteAccount(long id) {
+		return accountDao.deleteAccount(id);
 	}
 }

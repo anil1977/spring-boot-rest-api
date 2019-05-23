@@ -10,6 +10,6 @@ public interface AccountService {
 
 	Account addNewAccount(Account account);
 
-	boolean deleteAccount(long l);
+	boolean deleteAccount(long id);
 
 }

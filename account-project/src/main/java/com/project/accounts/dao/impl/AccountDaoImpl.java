@@ -40,8 +40,7 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public boolean deleteAccount(long id) {
-		// TODO Auto-generated method stub
-		return false;
+		return accounts.remove(id) != null;
 	}
 
 	// simple null check for now
