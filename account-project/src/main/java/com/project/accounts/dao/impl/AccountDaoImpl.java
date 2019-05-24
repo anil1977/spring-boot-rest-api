@@ -46,9 +46,9 @@ public class AccountDaoImpl implements AccountDao {
 	// simple null check for now
 	private boolean validAccount(Account account) {
 
-		return account.getFirstName() != null && !account.getFirstName().isEmpty() && account.getSecondName() != null
-				&& !account.getSecondName().isEmpty() && account.getAccountNumber() != null
-				&& !account.getAccountNumber().isEmpty();
+		return account.getFirstName() != null && !account.getFirstName().trim().isEmpty()
+				&& account.getSecondName() != null && !account.getSecondName().trim().isEmpty()
+				&& account.getAccountNumber() != null && !account.getAccountNumber().trim().isEmpty();
 	}
 
 	private Long getNextSeq() {
